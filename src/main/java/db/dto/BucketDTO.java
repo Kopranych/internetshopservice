@@ -14,7 +14,7 @@ public class BucketDTO {
     @Column(name = "id")
     private long id;
     @OneToOne
-    @JoinColumn(name = "users")
+    @JoinColumn(name = "customer")
     private UserDTO customer;
     @ManyToMany
     @JoinColumn(name = "itemlist")

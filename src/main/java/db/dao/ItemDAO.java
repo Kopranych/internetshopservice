@@ -30,6 +30,11 @@ public class ItemDAO {
         return ((ItemDTO) criteria.add(Restrictions.eq("name", name)));
     }
 
+    public ItemDTO getByArticle(String article){
+        Criteria criteria = session.createCriteria(ItemDTO.class);
+        return ((ItemDTO) criteria.add(Restrictions.eq("article", article)).uniqueResult());
+    }
+
     public long saveItem(ItemDTO item) throws HibernateException {
         return (Long) session.save(item);
     }

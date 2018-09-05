@@ -22,7 +22,7 @@ public class BucketDAO {
 
     public BucketDTO getByUserId(long user_id){
         Criteria criteria = session.createCriteria(BucketDTO.class);
-        return ((BucketDTO) criteria.add(Restrictions.eq("cutomer_id", user_id)));
+        return ((BucketDTO) criteria.add(Restrictions.eq("customer", user_id)));
     }
 
     public Collection<BucketDTO> getAll(){
