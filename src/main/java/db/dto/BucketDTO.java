@@ -7,14 +7,16 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "bucket")
+@Table(name = "buckets")
 public class BucketDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-    @Column(name = "customer")
+    @OneToOne
+    @JoinColumn(name = "users")
     private UserDTO customer;
-    @Column(name = "itemlist")
+    @ManyToMany
+    @JoinColumn(name = "itemlist")
     private List<ItemDTO> itemList;
 }

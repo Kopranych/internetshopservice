@@ -15,9 +15,10 @@ public class OrderDTO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-    @Column(name = "customer")
-    private UserDTO customer;
-    @Column(name = "items")
+    @Column(name = "customer_id")
+    private long customerId;
+    @OneToMany
+    @JoinColumn(name = "items")
     private List<ItemDTO> itemList;
     @Column(name = "shippingmethod")
     private ShippingMethod shippingMethod;

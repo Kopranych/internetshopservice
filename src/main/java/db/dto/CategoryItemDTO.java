@@ -14,9 +14,8 @@ public class CategoryItemDTO {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "category")
-    private CategoryItemDTO categoryItem;
-    @Column(name = "parentcategory")
+    @ManyToOne
+    @JoinColumn(name = "parent_category")
     private CategoryItemDTO parentCategoryItem;
 }
 
