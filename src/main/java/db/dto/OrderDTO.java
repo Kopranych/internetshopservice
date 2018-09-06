@@ -3,11 +3,13 @@ package db.dto;
 import db.PaymentType;
 import db.ShippingMethod;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "orders")
 public class OrderDTO {
@@ -25,5 +27,12 @@ public class OrderDTO {
     private ShippingMethod shippingMethod;
     @Column(name = "paymenttype")
     private PaymentType paymentType;
+
+    public OrderDTO(UserDTO customer, List<ItemDTO> itemList, ShippingMethod shippingMethod, PaymentType paymentType){
+        this.customer = customer;
+        this.itemList = itemList;
+        this.shippingMethod = shippingMethod;
+        this.paymentType = paymentType;
+    }
 
 }

@@ -1,7 +1,6 @@
 package db.dao;
 
 import db.dto.BucketDTO;
-import db.dto.ItemDTO;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -31,7 +30,7 @@ public class BucketDAO {
     }
 
 
-    public long saveBucket(ItemDTO item) throws HibernateException {
-        return (Long) session.save(item);
+    public long saveBucket(BucketDTO bucket) throws HibernateException {
+        return (Long) session.save(bucket);
     }
 }

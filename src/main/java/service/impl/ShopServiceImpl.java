@@ -1,8 +1,9 @@
 package service.impl;
 
 import db.DBConfig;
-import db.dao.AvailableItemsDAO;
-import db.dao.ItemDAO;
+import db.PaymentType;
+import db.ShippingMethod;
+import db.dao.*;
 import db.dto.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -46,24 +47,91 @@ public class ShopServiceImpl implements ShopService {
         return itemDTOList;
     }
 
-    public void addItemToBucket(UserDTO user, ItemDTO item) {
-
+    public long saveBucket(BucketDTO bucket) {
+        long bucketId = 0;
+        try {
+            session = dbConfig.getSessionFactory().openSession();
+            BucketDAO bucketDAO = new BucketDAO(session);
+            Transaction transaction = session.beginTransaction();
+            bucketId = bucketDAO.saveBucket(bucket);
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return bucketId;
     }
 
-    public void checkout(OrderDTO order) {
+    public long checkout(BucketDTO bucket, UserDTO user, ShippingMethod shippingMethod, PaymentType paymentType) {
+        long orderId = 0;
+        try {
+            session = dbConfig.getSessionFactory().openSession();
+            OrderDAO orderDAO = new OrderDAO(session);
+            Transaction transaction = session.beginTransaction();
+            orderId = orderDAO.saveOrder(new OrderDTO(user, bucket.getItemList(), shippingMethod, paymentType));
+            transaction.commit();
 
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return orderId;
     }
 
     public List<ItemDTO> showItemInBucket(BucketDTO bucket) {
         return null;
     }
 
-    public void updateAvailableItem() {
-
+    public void updateAvailableItem(long itemId, boolean add) {
+        try {
+            session = dbConfig.getSessionFactory().openSession();
+            ItemDAO itemDAO = new ItemDAO(session);
+            ItemDTO item = itemDAO.getById(itemId);
+            AvailableItemsDAO availableItemsDAO = new AvailableItemsDAO(session);
+            AvailableItemsDTO availableItemsDTO = availableItemsDAO.getByArticle(item.getArticle());
+            int count = availableItemsDTO.getCount();
+            if(add) {
+                availableItemsDTO.setCount(count++);
+            }else if(count>0){
+                availableItemsDTO.setCount(count--);
+            }else{
+                System.out.println("No products available");
+            }
+            Transaction transaction = session.beginTransaction();
+            availableItemsDAO.saveAvailableItem(availableItemsDTO);
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
     }
 
-    public long addItem(){
+    public long saveCustomer(UserDTO user){
+        long userId = 0;
+        try {
+            session = dbConfig.getSessionFactory().openSession();
+            UserDAO userDAO = new UserDAO(session);
+            Transaction transaction = session.beginTransaction();
+            userId = userDAO.saveUser(user);
+            transaction.commit();
 
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return userId;
     }
 
     public void createTestItem(){

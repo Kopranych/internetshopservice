@@ -26,7 +26,7 @@ public class AvailableItemsDAO {
 
     public AvailableItemsDTO getByArticle(String article) throws HibernateException {
         Criteria criteria = session.createCriteria(AvailableItemsDTO.class);
-        return ((AvailableItemsDTO) criteria.add(Restrictions.eq("article", article)));
+        return ((AvailableItemsDTO) criteria.add(Restrictions.eq("article", article)).uniqueResult());
     }
 
     public long saveAvailableItem(AvailableItemsDTO availableItems) throws HibernateException {

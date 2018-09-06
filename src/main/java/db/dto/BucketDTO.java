@@ -3,6 +3,7 @@ package db.dto;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,5 +19,5 @@ public class BucketDTO {
     private UserDTO customer;
     @ManyToMany
     @JoinColumn(name = "itemlist")
-    private List<ItemDTO> itemList;
+    private List<ItemDTO> itemList = new ArrayList<ItemDTO>();
 }

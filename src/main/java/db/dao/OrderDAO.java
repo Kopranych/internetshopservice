@@ -29,7 +29,7 @@ public class OrderDAO {
         return ((OrderDTO) criteria.add(Restrictions.eq("customer_id", userId)));
     }*/
 
-    public long saveItem(OrderDTO order) throws HibernateException {
+    public long saveOrder(OrderDTO order) throws HibernateException {
         return (Long) session.save(order);
     }
 }

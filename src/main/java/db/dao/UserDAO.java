@@ -29,7 +29,7 @@ public class UserDAO {
         return ((UserDTO) criteria.add(Restrictions.eq("name", name)));
     }
 
-    public long saveItem(UserDTO user) throws HibernateException {
+    public long saveUser(UserDTO user) throws HibernateException {
         return (Long) session.save(user);
     }
 }
