@@ -97,9 +97,9 @@ public class ShopServiceImpl implements ShopService {
             AvailableItemsDTO availableItemsDTO = availableItemsDAO.getByArticle(item.getArticle());
             int count = availableItemsDTO.getCount();
             if(add) {
-                availableItemsDTO.setCount(count++);
+                availableItemsDTO.setCount(++count);
             }else if(count>0){
-                availableItemsDTO.setCount(count--);
+                availableItemsDTO.setCount(--count);
             }else{
                 System.out.println("No products available");
             }
